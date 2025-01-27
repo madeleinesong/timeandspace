@@ -2,7 +2,6 @@
   "a man reads a newspaper on the toilet",
   "a man chases another man",
   "a man is doubted",
-  "turn the AC off",
   "a lie is being told",
   "you are in love",
   "a leg is being amputated",
@@ -33,7 +32,6 @@
   "the tide goes out",
   "someone is being unfairly imprisoned",
   "teenager deletes a message for all",
-  "window shattered by a baseball",
   "the guards are beating someone again",
   "satellites orbit the earth",
   "bombs are falling",
@@ -97,8 +95,6 @@
   "a father is praying",
   "a fish is snapping a fly",
   "an old man is reflecting on his life",
-  "a car is arriving at its destination",
-  "a woman smears on lip gloss",
   "a mother feeds her child",
   "a crumpled napkin",
   "someone is having the happiest day of their life",
@@ -111,3 +107,11 @@
   "flowers are cut and sold",
   "ion channels move sodium and potassium",
   "the moon tugs on the ocean",
+
+  1846: a window is shattered by a baseball
+  1850: Emily Dickinson is writing in her room
+  1902: turn the AC off
+  1932: a young woman smears on lip gloss
+  1984: Whole families shopping at night! Aisles full of husbands! Wives in the avocados, babies in the tomatoes!–and you, Garcia Lorca, what were you doing down by the watermelons?
+  2023: a self-driving car in San Francisco makes a right turn to its destination
+  2024: we fell in love
