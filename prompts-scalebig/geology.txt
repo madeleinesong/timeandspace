@@ -1,3 +1,29 @@
+13.8 billion years ago: The Big Bang forms the universe.
+
+4.6 billion years ago: A group of protostars, one of which will become the Sun, form from a cloud of debris left by prior star explosions in the Milky Way.
+
+4.59 billion years ago: The giant planets Jupiter, Saturn, Uranus, and Neptune form around the protosun. At least Uranus and Neptune form closer to the Sun than where they are today. One or more ice giants may have also formed that were later ejected from the solar system. 
+
+4.55 billion years ago: Let there be light: The Sun begins fusing hydrogen into helium.
+
+4.5 billion years ago: Mercury, Venus, Earth, and Mars form. A Mars-sized planet collides with Earth, and the debris forms the Moon.
+
+4.5 to 4.1 billion years ago: The Sun gravitationally separates from its protostar siblings.
+
+4.1 to 3.8 billion years ago: The giant planets' orbits shift, scattering small worlds throughout the solar system. Some bombard the inner planets and likely deliver water and organics to Earth.
+
+4 to 3 billion years ago: Small world bombardment causes widespread volcanism on the inner planets.
+
+3.8 to 3.5 billion years ago: Life begins on Earth.
+
+3 billion years ago: Mars loses most of its atmosphere and water.
+
+2.5 billion years ago: Photosynthetic organisms evolve on Earth and pump oxygen into our atmosphere, helping create the blend of gases we breathe today.
+
+1 billion years ago: Volcanism on the Moon stops.
+
+100 million years ago: An impact on the Moon forms Tycho crater. Saturn gets its rings.
+
 The Earth is formed out of debris around the solar protoplanetary disk. There is no life. Temperatures are extremely hot, with frequent volcanic activity and hellish-looking environments (hence the eon's name, which comes from Hades). The atmosphere is nebular. Possible early oceans or bodies of liquid water. The Moon is formed around this time probably due to a protoplanet's collision into Earth.
 
 Prokaryote life, the first form of life, emerges at the very beginning of this eon, in a process known as abiogenesis. The continents of Ur, Vaalbara and Kenorland may have existed around this time. The atmosphere is composed of volcanic and greenhouse gases.
@@ -5,3 +31,5 @@ Prokaryote life, the first form of life, emerges at the very beginning of this e
 Proterozoic	Eon. The name of this eon means "early life". Eukaryotes, a more complex form of life, emerge, including some forms of multicellular organisms. Bacteria begin producing oxygen, shaping the third and current of Earth's atmospheres. Plants, later animals and possibly earlier forms of fungi form around this time. The early and late phases of this eon may have undergone "Snowball Earth" periods, in which all of the planet suffered below-zero temperatures. The early continents of Columbia, Rodinia and Pannotia, in that order, may have existed in this eon.
 
 Phanerozoic Eon. Complex life, including vertebrates, begin to dominate the Earth's ocean in a process known as the Cambrian explosion. Pangaea forms and later dissolves into Laurasia and Gondwana, which in turn dissolve into the current continents. Gradually, life expands to land and familiar forms of plants, animals and fungi begin appearing, including annelids, insects and reptiles, hence the eon's name, which means "visible life". Several mass extinctions occur, among which birds, the descendants of non-avian dinosaurs, and more recently mammals emerge. Modern animals—including humans—evolve at the most recent phases of this eon.
+
+66 million years ago: A giant asteroid impacts Earth, triggering global climate change. Three quarters of life, including the dinosaurs, go extinct.
