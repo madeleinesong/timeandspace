@@ -1,33 +1,107 @@
-import React from "react";
-import { parseTimelineData } from "@/lib/parseTimelineData";
+"use client";
 
-// Raw data
-const rawData = `
-13,800,000,000: Big Bang singularity:cosmic inflation, creation of all particles of matter...
-13,550,000,000: Ignition of hydrogen stars, bathing the Universe in the first light of cosmic dawn...
-13,000,000,000: Aggregation of stars into the Milky Way galaxy...
-4,570,000,000: Formation of the Sun and Solar System...
-`;
+import React, { useEffect, useRef, useState } from "react";
 
 export default function HomePage() {
-  const timelineData = parseTimelineData(rawData);
+  const [timelineData, setTimelineData] = useState([]);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [jumpYear, setJumpYear] = useState(2000);
+
+  // Fetch timeline data
+  useEffect(() => {
+    fetch("/timelineData.json")
+      .then((response) => response.json())
+      .then((data) => setTimelineData(data));
+  }, []);
+
+  // Scroll to default year (2000) on mount
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollToYear(2000);
+    }
+  }, [timelineData]);
+
+  // Scroll to a specific year
+  const scrollToYear = (year: number) => {
+    if (!scrollContainerRef.current) return;
+
+    const position = (year + 10000) * 10; // Map year to X-axis (1 year = 10px)
+    scrollContainerRef.current.scrollTo({
+      left: position,
+      behavior: "smooth",
+    });
+  };
+
+  // Handle "Jump To" functionality
+  const handleJump = () => {
+    scrollToYear(jumpYear);
+  };
 
   return (
-    <main className="max-w-4xl mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Timeline of the Universe</h1>
-      <section className="space-y-4">
-        {timelineData.map((event) => (
-          <article
-            key={event.id}
-            className="border-l-4 border-blue-500 p-4 bg-gray-50"
-          >
-            <h2 className="text-xl font-semibold">
-              {event.yearsAgo.toLocaleString()} years ago
-            </h2>
-            <p className="mt-2">{event.description}</p>
-          </article>
-        ))}
-      </section>
-    </main>
+    <div className="w-screen h-screen overflow-hidden bg-gray-100">
+      <h1 className="text-center text-4xl font-bold py-4">Timeline of History</h1>
+
+      {/* Jump To: Button */}
+      <div className="absolute top-4 right-4 flex items-center space-x-2">
+        <input
+          type="number"
+          value={jumpYear}
+          onChange={(e) => setJumpYear(Number(e.target.value))}
+          placeholder="Year (e.g., 2000)"
+          className="p-2 border border-gray-300 rounded"
+        />
+        <button
+          onClick={handleJump}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Jump To
+        </button>
+      </div>
+
+      <div
+        ref={scrollContainerRef}
+        className="relative flex h-[80vh] overflow-x-scroll bg-white border-t border-b border-gray-300"
+        style={{ scrollBehavior: "smooth" }}
+      >
+        {/* X-Axis with Vertical Lines */}
+        <div className="absolute inset-0 flex">
+          {Array.from({ length: 2200 }, (_, i) => {
+            const year = i * 100 - 10000; // Map index to year (100-year intervals)
+            return (
+              <div
+                key={i}
+                className="flex-shrink-0 w-[100px] h-full border-r border-gray-300"
+              >
+                <div className="absolute bottom-0 left-0 transform translate-x-[-50%] text-sm text-gray-500">
+                  {year > 0 ? `${year} CE` : `${Math.abs(year)} BCE`}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Timeline Events */}
+        {timelineData.map((event, index) => {
+          const eventYear = parseInt(event.years.replace(/,/g, ""), 10);
+          const adjustedYear =
+            event.years.includes("BC") || event.years.includes("BCE")
+              ? -eventYear
+              : eventYear;
+
+          const position = (adjustedYear + 10000) * 10; // Map year to X-axis position
+
+          return (
+            <div
+              key={index}
+              className="absolute bottom-10 flex-shrink-0 bg-blue-500 text-white p-4 rounded-lg shadow-md"
+              style={{ left: `${position}px` }}
+            >
+              <h2 className="text-xl font-semibold">{event.years}</h2>
+              <p>{event.description}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
