@@ -1,25 +1,4 @@
-13.7 billion BC: the universe begins with the Big Bang, expanding and cooling very rapidly.
-4.6 billion BC: our Sun and planets begin forming from the gravitational collapse of interstellar gas
-4 billion BC: life appears on Earth in the form of prokaryotic precursors to bacteria and archaea.
-3.8 billion BC: the Late Heavy Bombardment of many asteroids hitting the earth; the last common ancestor of all life survives as a thermophile, likely in heated deep sea vents.
-2.3 billion BC: oceanic cyanobacteria increase atmospheric oxygen, wiping out many anaerobes
-2 billion BC: the first eukaryotes form, likely through the symbiosis of bacteria and archaea. These later evolve into the vast majority of multicellular lifeforms, notably animals, plants, fungi and algae.
-1.2 billion BC: first record of sexual reproduction, occurring in eukaryotes.
-541 million BC: a massive diversity of life, especially animals, evolves in the Cambrian explosion
-420 - 360 million BC: the Devonian period: life spreads across land, insects evolve, land plants increase in height 100-fold, and fish diversify significantly. It ends with a prolonged extinction event.
-300 - 175 million BC: Supercontinent Pangaea forms.
-252 million BC: Permian extinction kills 90% of species; flowering plants begin.
-252 - 66 million BC: Dinosaurs evolve and dominate; birds descend from them.
-200 million BC: Mammals evolve.
-66 million BC: Asteroid wipes out dinosaurs, last of five major extinctions.
-2.5 million BC: Homo habilis uses stone tools.
-200,000 BC: Homo sapiens appear, eventually leave Africa.
-70,000 - 30,000 BC: Cognitive Revolution enables complex language, myths, culture.
-46,000 BC: Humans reach Australia, drive extinctions.
-45,000 BC: Humans reach Europe, outcompete Neanderthals.
-20,000 BC: Dogs domesticated; later sheep, pigs, goats.
-10,000 BC: Holocene epoch begins; agriculture starts in Mesopotamia.
-5000 - 3000 BC: Nile Valley settlers form two Egyptian kingdoms.
+
 3500 BC: men feel cool on horses
 3000 BC: Sumerians invent writing, wheel, irrigation; Bronze Age begins.
 3000 - 1000 BC: Egyptian Old, Middle, New Kingdoms build pyramids, conquer Nubia.
