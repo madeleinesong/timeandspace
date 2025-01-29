@@ -6,26 +6,35 @@ export default function HomePage() {
   const [timelineData, setTimelineData] = useState([]);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [jumpYear, setJumpYear] = useState(2000);
+  const [pixelsPerYear, setPixelsPerYear] = useState(10); // Default: 10px per year
+  const maxYear = 2100; // Stop at 2100
+  const minYear = -10000; // Start at 10,000 BCE
+  const totalYears = maxYear - minYear; // Total range of years
+  const offset = Math.abs(minYear); // Offset for BCE years
 
   // Fetch timeline data
   useEffect(() => {
-    fetch("/timelineData.json")
+    fetch("/big.json")
       .then((response) => response.json())
       .then((data) => setTimelineData(data));
   }, []);
 
-  // Scroll to default year (2000) on mount
-  useEffect(() => {
-    if (scrollContainerRef.current) {
-      scrollToYear(2000);
+  // Prevent scrolling past 2100
+  const handleScroll = () => {
+    if (!scrollContainerRef.current) return;
+
+    const maxScrollLeft = totalYears * pixelsPerYear; // Position of 2100
+    if (scrollContainerRef.current.scrollLeft > maxScrollLeft) {
+      scrollContainerRef.current.scrollLeft = maxScrollLeft; // Lock scroll
     }
-  }, [timelineData]);
+  };
 
   // Scroll to a specific year
   const scrollToYear = (year: number) => {
     if (!scrollContainerRef.current) return;
 
-    const position = (year + 10000) * 10; // Map year to X-axis (1 year = 10px)
+    const constrainedYear = Math.min(Math.max(year, minYear), maxYear); // Constrain year within range
+    const position = (constrainedYear + offset) * pixelsPerYear; // Apply offset for BCE
     scrollContainerRef.current.scrollTo({
       left: position,
       behavior: "smooth",
@@ -39,10 +48,23 @@ export default function HomePage() {
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-gray-100">
-      <h1 className="text-center text-4xl font-bold py-4">Timeline of History</h1>
+      <h1 className="text-left text-4xl font-bold text-black py-4">Timeline of Everything</h1>
 
-      {/* Jump To: Button */}
+      {/* Controls */}
       <div className="absolute top-4 right-4 flex items-center space-x-2">
+        {/* Adjust Pixels Per Year */}
+        <select
+          value={pixelsPerYear}
+          onChange={(e) => setPixelsPerYear(Number(e.target.value))}
+          className="p-2 border border-gray-300 rounded bg-white text-black"
+        >
+          <option value={5}>5 px/year</option>
+          <option value={10}>10 px/year</option>
+          <option value={20}>20 px/year</option>
+          <option value={50}>50 px/year</option>
+        </select>
+
+        {/* Jump To: Input */}
         <input
           type="number"
           value={jumpYear}
@@ -58,19 +80,22 @@ export default function HomePage() {
         </button>
       </div>
 
+      {/* Timeline Container */}
       <div
         ref={scrollContainerRef}
         className="relative flex h-[80vh] overflow-x-scroll bg-white border-t border-b border-gray-300"
+        onScroll={handleScroll} // Add scroll lock
         style={{ scrollBehavior: "smooth" }}
       >
         {/* X-Axis with Vertical Lines */}
         <div className="absolute inset-0 flex">
-          {Array.from({ length: 2200 }, (_, i) => {
-            const year = i * 100 - 10000; // Map index to year (100-year intervals)
+          {Array.from({ length: totalYears }, (_, i) => {
+            const year = minYear + i; // Calculate year
             return (
               <div
-                key={i}
-                className="flex-shrink-0 w-[100px] h-full border-r border-gray-300"
+                key={year}
+                className="flex-shrink-0 h-full border-r border-gray-300"
+                style={{ width: `${pixelsPerYear}px` }} // Adjust width based on scale
               >
                 <div className="absolute bottom-0 left-0 transform translate-x-[-50%] text-sm text-gray-500">
                   {year > 0 ? `${year} CE` : `${Math.abs(year)} BCE`}
@@ -88,7 +113,7 @@ export default function HomePage() {
               ? -eventYear
               : eventYear;
 
-          const position = (adjustedYear + 10000) * 10; // Map year to X-axis position
+          const position = (adjustedYear + offset) * pixelsPerYear; // Apply offset for BCE years
 
           return (
             <div
