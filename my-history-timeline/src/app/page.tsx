@@ -5,8 +5,9 @@ import React, { useEffect, useRef, useState } from "react";
 export default function HomePage() {
   const [timelineData, setTimelineData] = useState([]);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [jumpYear, setJumpYear] = useState(2000);
+  const [jumpYear, setJumpYear] = useState(2024); // Default to 2024
   const [pixelsPerYear, setPixelsPerYear] = useState(10); // Default: 10px per year
+  const [inputPixels, setInputPixels] = useState(""); // Use string to prevent "0" issue
   const maxYear = 2100; // Stop at 2100
   const minYear = -10000; // Start at 10,000 BCE
   const totalYears = maxYear - minYear; // Total range of years
@@ -17,6 +18,13 @@ export default function HomePage() {
     fetch("/big.json")
       .then((response) => response.json())
       .then((data) => setTimelineData(data));
+  }, []);
+
+  // Set default view to 2024 on mount
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollToYear(2024);
+    }
   }, []);
 
   // Prevent scrolling past 2100
@@ -46,6 +54,14 @@ export default function HomePage() {
     scrollToYear(jumpYear);
   };
 
+  // Handle "Pixels Per Year" input
+  const handlePixelsPerYearChange = () => {
+    const parsedValue = Number(inputPixels);
+    if (!isNaN(parsedValue) && parsedValue >= 1) {
+      setPixelsPerYear(parsedValue); // Only set if input is valid (>= 1px per year)
+    }
+  };
+
   return (
     <div className="w-screen h-screen overflow-hidden bg-gray-100">
       <h1 className="text-left text-4xl font-bold text-black py-4">Timeline of Everything</h1>
@@ -53,22 +69,25 @@ export default function HomePage() {
       {/* Controls */}
       <div className="absolute top-4 right-4 flex items-center space-x-2">
         {/* Adjust Pixels Per Year */}
-        <select
-          value={pixelsPerYear}
-          onChange={(e) => setPixelsPerYear(Number(e.target.value))}
-          className="p-2 border border-gray-300 rounded bg-white text-black"
+        <input
+          type="number"
+          value={inputPixels} // Allow empty input
+          onChange={(e) => setInputPixels(e.target.value)} // Keep as string
+          placeholder="Pixels/Year"
+          className="p-2 border border-gray-300 rounded"
+        />
+        <button
+          onClick={handlePixelsPerYearChange}
+          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
         >
-          <option value={5}>5 px/year</option>
-          <option value={10}>10 px/year</option>
-          <option value={20}>20 px/year</option>
-          <option value={50}>50 px/year</option>
-        </select>
+          Set Scale
+        </button>
 
         {/* Jump To: Input */}
         <input
           type="number"
-          value={jumpYear}
-          onChange={(e) => setJumpYear(Number(e.target.value))}
+          value={jumpYear} // Allow empty input
+          onChange={(e) => setJumpYear(Number(e.target.value) || "")} // Handle empty input properly
           placeholder="Year (e.g., 2000)"
           className="p-2 border border-gray-300 rounded"
         />
@@ -88,22 +107,24 @@ export default function HomePage() {
         style={{ scrollBehavior: "smooth" }}
       >
         {/* X-Axis with Vertical Lines */}
-        <div className="absolute inset-0 flex">
-          {Array.from({ length: totalYears }, (_, i) => {
-            const year = minYear + i; // Calculate year
-            return (
-              <div
-                key={year}
-                className="flex-shrink-0 h-full border-r border-gray-300"
-                style={{ width: `${pixelsPerYear}px` }} // Adjust width based on scale
-              >
-                <div className="absolute bottom-0 left-0 transform translate-x-[-50%] text-sm text-gray-500">
-                  {year > 0 ? `${year} CE` : `${Math.abs(year)} BCE`}
+        {pixelsPerYear <= 7 && ( // Only show lines if scale is <= 10px/year
+          <div className="absolute inset-0 flex">
+            {Array.from({ length: totalYears }, (_, i) => {
+              const year = minYear + i; // Calculate year
+              return (
+                <div
+                  key={year}
+                  className="flex-shrink-0 h-full border-r border-gray-300"
+                  style={{ width: `${pixelsPerYear}px` }} // Adjust width based on scale
+                >
+                  <div className="absolute bottom-0 left-0 transform translate-x-[-50%] text-sm text-gray-500">
+                    {year > 0 ? `${year} CE` : `${Math.abs(year)} BCE`}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
 
         {/* Timeline Events */}
         {timelineData.map((event, index) => {
