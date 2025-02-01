@@ -3,8 +3,8 @@
   "a man chases another man",
   "a man is doubted",
   "a lie is being told",
-  "you are in love",
-  "a leg is being amputated",
+"a man falls in love",  
+"a leg is being amputated",
   "a child is hungry",
   "people beg for cash",
   "a traffic sign is being disobeyed",
@@ -83,6 +83,7 @@
   "a prisoner is feeling remorse",
   "two black holes are merging",
   "an egg is being cracked",
+  "orange juice",
   "a legislator is holding forth",
   "a factory worker is pulling a lever",
   "3 is being added to 7",
@@ -107,11 +108,11 @@
   "flowers are cut and sold",
   "ion channels move sodium and potassium",
   "the moon tugs on the ocean",
-
-  1846: a window is shattered by a baseball
-  1850: Emily Dickinson is writing in her room
-  1902: turn the AC off
-  1932: a young woman smears on lip gloss
-  1984: Whole families shopping at night! Aisles full of husbands! Wives in the avocados, babies in the tomatoes!–and you, Garcia Lorca, what were you doing down by the watermelons?
-  2023: a self-driving car in San Francisco makes a right turn to its destination
-  2024: we fell in love
+3,600,000 BC: a pair of human footprints in the sand 
+1846: a window is shattered by a baseball
+1850: Emily Dickinson is writing in her room
+1902: turn the AC off
+1932: a young woman smears on lip gloss
+1984: Whole families shopping at night! Aisles full of husbands! Wives in the avocados, babies in the tomatoes!–and you, Garcia Lorca, what were you doing down by the watermelons?
+2023: a self-driving car in San Francisco makes a right turn to its destination
+2024: we fell in love
