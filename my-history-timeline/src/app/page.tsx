@@ -61,7 +61,7 @@ export default function HomePage() {
       <div
         className="fixed top-0 left-0 w-full bg-white shadow-md z-10 px-6 py-3 flex items-center justify-between"
         style={{
-          fontSize: "1rem",
+          fontSize: "0.8rem",
           transform: "scale(1)",
           transformOrigin: "top left",
           whiteSpace: "nowrap", // Prevent wrapping
