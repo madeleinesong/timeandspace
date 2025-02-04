@@ -4,10 +4,24 @@ import openai  # Install with: pip install openai
 # Configure your OpenAI API key
 openai.api_key = "your_openai_api_key"
 
+def paraphrase_events(description):
+    try:
+      completion = client.chat.completions.create(
+          model="gpt-4o",
+          store=True,
+          messages=[
+              {"role": "system", "content": 
+              "You are an expert on the history of everything. You are incredibly witty and cool and your knowledge is both nuanced and broad. "
+              "You are accurate and incredibly specific, and you love the little details in human history that make us human. "
+              "However, you hate redundancy and especially abhor complex/academic language for the sake of sounding complex/academic."},
+              {"role": "user", "content": prompt + formatted_descriptions}
+          ],
+      )
+
 def classify_event(description):
     """Uses GPT-4 to determine if an event is 'big-scale' or 'individual-scale'."""
     try:
-        response = openai.ChatCompletion.create(
+        response = openai.chat.completions.create(
             model="gpt-4",
             messages=[
                 {"role": "system", "content": 
