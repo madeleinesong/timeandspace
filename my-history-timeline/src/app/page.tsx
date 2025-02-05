@@ -13,7 +13,7 @@ export default function HomePage() {
   const offset = Math.abs(minYear);
 
   useEffect(() => {
-    fetch("/big.json")
+    fetch("/data.json")
       .then((response) => response.json())
       .then((data) => setTimelineData(data));
   }, []);
@@ -57,50 +57,36 @@ export default function HomePage() {
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-gray-100">
-      {/* Fixed Header in One Row */}
-      <div
-        className="fixed top-0 left-0 w-full bg-white shadow-md z-10 px-6 py-3 flex items-center justify-between"
-        style={{
-          fontSize: "0.8rem",
-          transform: "scale(1)",
-          transformOrigin: "top left",
-          whiteSpace: "nowrap", // Prevent wrapping
-        }}
-      >
-        <h1 className="text-black font-bold text-lg mr-6">Timeline of Everything</h1>
-        
-        {/* Controls in One Line */}
+      {/* Fixed Header */}
+      <div className="fixed top-0 left-0 w-full bg-white shadow-md z-10 px-6 py-3 flex items-center justify-between">
+        <h1 className="text-black font-bold text-lg">Timeline of Everything</h1>
+
+        {/* Controls */}
         <div className="flex items-center space-x-4">
-          {/* Set Scale */}
           <input
             type="number"
             value={inputPixels}
             onChange={(e) => setInputPixels(e.target.value)}
             placeholder="Pixels/Year"
             className="p-2 border border-gray-300 rounded w-24 text-base"
-            style={{ fontSize: "1rem !important" }}
           />
           <button
             onClick={handlePixelsPerYearChange}
             className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 text-base"
-            style={{ fontSize: "1rem !important" }}
           >
             Set Scale
           </button>
 
-          {/* Jump To Year */}
           <input
             type="number"
             value={jumpYear}
             onChange={(e) => setJumpYear(Number(e.target.value) || "")}
             placeholder="Year (e.g., 2000)"
             className="p-2 border border-gray-300 rounded w-24 text-base"
-            style={{ fontSize: "1rem !important" }}
           />
           <button
             onClick={handleJump}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 text-base"
-            style={{ fontSize: "1rem !important" }}
           >
             Jump To
           </button>
@@ -110,11 +96,11 @@ export default function HomePage() {
       {/* Timeline Container */}
       <div
         ref={scrollContainerRef}
-        className="relative flex h-[88vh] overflow-scroll bg-white border-t mt-16"
+        className="relative flex h-[88vh] overflow-x-scroll bg-white border-t mt-16"
         onScroll={handleScroll}
         style={{ scrollBehavior: "smooth" }}
       >
-        {/* Century Banners (Full Width) */}
+        {/* X-Axis Century Banners */}
         {Array.from({ length: (maxYear - minYear) / 100 + 1 }, (_, i) => {
           const year = minYear + i * 100;
           const position = (year + offset) * pixelsPerYear;
@@ -146,23 +132,53 @@ export default function HomePage() {
               ? -eventYear
               : eventYear;
 
+          // Determine duration of event
+          let eventWidth = pixelsPerYear;
+          if (event.years.includes("-")) {
+            const [start, end] = event.years.split("-").map((y) => parseInt(y));
+            eventWidth = (Math.abs(start - end) || 1) * pixelsPerYear;
+          }
+
           const position = (adjustedYear + offset) * pixelsPerYear;
+
+          // Handle Short Text Case
+          const textWidth = `${eventWidth}px`;
 
           return (
             <div
               key={index}
-              className="absolute bottom-10 flex-shrink-0 bg-blue-500 text-white p-4 rounded-lg shadow-md"
-              style={{ left: `${position}px` }}
+              className="absolute bottom-10 flex-shrink-0 bg-blue-500 text-white p-2 rounded-lg shadow-md overflow-hidden whitespace-nowrap"
+              style={{
+                left: `${position}px`,
+                width: textWidth, // Use dynamic width for short text
+                minWidth: "100px",
+              }}
             >
-              {/* Only show year every century */}
-              {(adjustedYear % 100 === 0 || index === 0) && (
-                <div className="text-center font-bold text-lg mb-2">{event.years}</div>
-              )}
-              <p>{event.description}</p>
+              <div
+                className="text-xs"
+                style={{
+                  display: "inline-block",
+                  animation: `scroll-text 20s linear infinite`
+                }}
+              >
+                {event.description}
+              </div>
             </div>
           );
         })}
       </div>
+
+      {/* Scroll Animation CSS */}
+      <style jsx>{`
+        @keyframes scroll-text {
+          from {
+            transform: translateX(100%);
+          }
+          to {
+            transform: translateX(-100%);
+          }
+        }
+      `}</style>
     </div>
   );
 }
