@@ -6,11 +6,11 @@ export default function HomePage() {
   const [timelineData, setTimelineData] = useState([]);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [jumpYear, setJumpYear] = useState(2024);
-  const [pixelsPerYear, setPixelsPerYear] = useState(10);
-  const [inputPixels, setInputPixels] = useState("");
+  const [pixelsPerYear, setPixelsPerYear] = useState(10); // Default scale
   const maxYear = 2100;
   const minYear = -10000;
   const offset = Math.abs(minYear);
+  const currentYear = new Date().getFullYear(); // Get the current year
 
   useEffect(() => {
     fetch("/data.json")
@@ -48,11 +48,14 @@ export default function HomePage() {
     scrollToYear(jumpYear);
   };
 
-  const handlePixelsPerYearChange = () => {
-    const parsedValue = Number(inputPixels);
-    if (!isNaN(parsedValue) && parsedValue >= 1) {
-      setPixelsPerYear(parsedValue);
-    }
+  // ** Zoom In (Double pixels per year) **
+  const handleZoomIn = () => {
+    setPixelsPerYear((prev) => Math.min(prev * 2, 100)); // Limit max zoom
+  };
+
+  // ** Zoom Out (Halve pixels per year) **
+  const handleZoomOut = () => {
+    setPixelsPerYear((prev) => Math.max(prev / 2, 1)); // Limit min zoom
   };
 
   return (
@@ -63,25 +66,26 @@ export default function HomePage() {
 
         {/* Controls */}
         <div className="flex items-center space-x-4">
-          <input
-            type="number"
-            value={inputPixels}
-            onChange={(e) => setInputPixels(e.target.value)}
-            placeholder="Pixels/Year"
-            className="p-2 border border-gray-300 rounded w-24 text-base"
-          />
+          {/* Zoom In/Out Buttons */}
           <button
-            onClick={handlePixelsPerYearChange}
-            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 text-base"
+            onClick={handleZoomOut}
+            className="px-3 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
           >
-            Set Scale
+            −
+          </button>
+          <button
+            onClick={handleZoomIn}
+            className="px-3 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+          >
+            +
           </button>
 
+          {/* Jump To Year */}
           <input
             type="number"
             value={jumpYear}
             onChange={(e) => setJumpYear(Number(e.target.value) || "")}
-            placeholder="Year (e.g., 2000)"
+            placeholder="year"
             className="p-2 border border-gray-300 rounded w-24 text-base"
           />
           <button
@@ -124,6 +128,14 @@ export default function HomePage() {
           );
         })}
 
+        {/* Red Vertical Line for Current Year */}
+        <div
+          className="absolute top-0 bottom-0 w-[3px] bg-red-500"
+          style={{
+            left: `${(currentYear + offset) * pixelsPerYear}px`,
+          }}
+        />
+
         {/* Timeline Events */}
         {timelineData.map((event, index) => {
           const eventYear = parseInt(event.years.replace(/,/g, ""), 10);
@@ -147,10 +159,10 @@ export default function HomePage() {
           return (
             <div
               key={index}
-              className="absolute bottom-10 flex-shrink-0 bg-blue-500 text-white p-2 rounded-lg shadow-md overflow-hidden whitespace-nowrap"
+              className="absolute bottom-10 flex-shrink-0 bg-blue-500 text-white p-2 rounded-lg overflow-hidden whitespace-nowrap"
               style={{
                 left: `${position}px`,
-                width: textWidth, // Use dynamic width for short text
+                width: textWidth,
                 minWidth: "100px",
               }}
             >
@@ -158,7 +170,7 @@ export default function HomePage() {
                 className="text-xs"
                 style={{
                   display: "inline-block",
-                  animation: `scroll-text 20s linear infinite`
+                  animation: `scroll-text 20s linear infinite`,
                 }}
               >
                 {event.description}
