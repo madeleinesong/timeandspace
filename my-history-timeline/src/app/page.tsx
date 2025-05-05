@@ -2,15 +2,20 @@
 
 import React, { useEffect, useRef, useState } from "react";
 
+type TimelineEvent = {
+  years: string;
+  description?: string;
+};
+
 export default function HomePage() {
-  const [timelineData, setTimelineData] = useState([]);
+  const [timelineData, setTimelineData] = useState<TimelineEvent[]>([]);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [jumpYear, setJumpYear] = useState(2024);
-  const [pixelsPerYear, setPixelsPerYear] = useState(10); // Default scale
+  const [pixelsPerYear, setPixelsPerYear] = useState(10);
   const maxYear = 2100;
   const minYear = -10000;
   const offset = Math.abs(minYear);
-  const currentYear = new Date().getFullYear(); // Get the current year
+  const currentYear = new Date().getFullYear();
 
   useEffect(() => {
     fetch("/data.json")
@@ -48,25 +53,19 @@ export default function HomePage() {
     scrollToYear(jumpYear);
   };
 
-  // ** Zoom In (Double pixels per year) **
   const handleZoomIn = () => {
-    setPixelsPerYear((prev) => Math.min(prev * 2, 100)); // Limit max zoom
+    setPixelsPerYear((prev) => Math.min(prev * 2, 100));
   };
 
-  // ** Zoom Out (Halve pixels per year) **
   const handleZoomOut = () => {
-    setPixelsPerYear((prev) => Math.max(prev / 2, 1)); // Limit min zoom
+    setPixelsPerYear((prev) => Math.max(prev / 2, 1));
   };
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-gray-100">
-      {/* Fixed Header */}
       <div className="fixed top-0 left-0 w-full bg-white shadow-md z-10 px-6 py-3 flex items-center justify-between">
         <h1 className="text-black font-bold text-lg">Timeline of Everything</h1>
-
-        {/* Controls */}
         <div className="flex items-center space-x-4">
-          {/* Zoom In/Out Buttons */}
           <button
             onClick={handleZoomOut}
             className="px-3 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
@@ -79,12 +78,10 @@ export default function HomePage() {
           >
             +
           </button>
-
-          {/* Jump To Year */}
           <input
             type="number"
             value={jumpYear}
-            onChange={(e) => setJumpYear(Number(e.target.value) || "")}
+            onChange={(e) => setJumpYear(Number(e.target.value) || 2022)}
             placeholder="year"
             className="p-2 border border-gray-300 rounded w-24 text-base"
           />
@@ -97,14 +94,12 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Timeline Container */}
       <div
         ref={scrollContainerRef}
         className="relative flex h-[88vh] overflow-x-scroll bg-white border-t mt-16"
         onScroll={handleScroll}
         style={{ scrollBehavior: "smooth" }}
       >
-        {/* X-Axis Century Banners */}
         {Array.from({ length: (maxYear - minYear) / 100 + 1 }, (_, i) => {
           const year = minYear + i * 100;
           const position = (year + offset) * pixelsPerYear;
@@ -128,7 +123,6 @@ export default function HomePage() {
           );
         })}
 
-        {/* Red Vertical Line for Current Year */}
         <div
           className="absolute top-0 bottom-0 w-[3px] bg-red-500"
           style={{
@@ -136,7 +130,6 @@ export default function HomePage() {
           }}
         />
 
-        {/* Timeline Events */}
         {timelineData.map((event, index) => {
           const eventYear = parseInt(event.years.replace(/,/g, ""), 10);
           const adjustedYear =
@@ -144,16 +137,15 @@ export default function HomePage() {
               ? -eventYear
               : eventYear;
 
-          // Determine duration of event
           let eventWidth = pixelsPerYear;
           if (event.years.includes("-")) {
-            const [start, end] = event.years.split("-").map((y) => parseInt(y));
+            const [start, end] = event.years
+              .split("-")
+              .map((y) => parseInt(y.replace(/,/g, ""), 10));
             eventWidth = (Math.abs(start - end) || 1) * pixelsPerYear;
           }
 
           const position = (adjustedYear + offset) * pixelsPerYear;
-
-          // Handle Short Text Case
           const textWidth = `${eventWidth}px`;
 
           return (
@@ -180,7 +172,6 @@ export default function HomePage() {
         })}
       </div>
 
-      {/* Scroll Animation CSS */}
       <style jsx>{`
         @keyframes scroll-text {
           from {

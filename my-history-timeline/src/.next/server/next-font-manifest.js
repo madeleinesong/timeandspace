@@ -1,0 +1,1 @@
+self.__NEXT_FONT_MANIFEST='{"pages":{},"app":{"/Users/madeleinesong/timeandspace/timeandspace/my-history-timeline/src/app/layout":["static/media/a6f8c6b7131e657a-s.p.woff2","static/media/a34f9d1faa5f3315-s.p.woff2"]},"appUsingSizeAdjust":true,"pagesUsingSizeAdjust":false}';
