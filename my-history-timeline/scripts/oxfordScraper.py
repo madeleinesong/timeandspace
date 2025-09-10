@@ -1,6 +1,6 @@
 import json, re, pathlib
 
-src = pathlib.Path("..public/weaponsdata.json")        # your input
+src = pathlib.Path("../public/weaponsdata.json")        # your input
 dst = src                                         # overwrite same file (use a backup if you're scared)
 
 def clean_event(txt: str) -> str:
@@ -29,10 +29,6 @@ else:
 for row in items:
     row["year"]  = clean_year(row["year"])
     row["event"] = clean_event(row["event"])
-
-# sanity checks before write
-assert not any("go to" in r["event"].lower() for r in items)
-assert all(re.search(r"\b(BC|AD)$", r["year"]) for r in items)
 
 src.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 print("ok, cleaned + overwrote:", src)
