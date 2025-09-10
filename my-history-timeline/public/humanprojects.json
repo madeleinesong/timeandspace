@@ -1,0 +1,24 @@
+{
+  "human_projects": {
+    "technology": {
+      "definition": "hacking environment",
+      "subdomains": ["weapons", "tools"]
+    },
+    "art": {
+      "definition": "hacking meaning",
+      "subdomains": ["sonic", "visual"]
+    },
+    "status": {
+      "definition": "hacking power/scarcity",
+      "subdomains": ["politics", "economics"]
+    },
+    "love_death": {
+      "definition": "our fear of death",
+      "subdomains": ["religion", "relationships"]
+    },
+    "patterns": {
+      "definition": "we create and invent patterns",
+      "subdomains": ["language", "math"]
+    }
+  }
+}

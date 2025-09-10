@@ -1,16 +1,16 @@
 [
   {
-    "year": "64,000 BC",
+    "year": "64000 BC",
     "event": "animals hunted with stone-tip weapons",
     "scale": -1
   },  
   {
-    "year": "25,000 BC",
+    "year": "25000 BC",
     "event": "phalanx",
     "scale": -1
   },  
   {
-    "year": "15,000 BC",
+    "year": "15000 BC",
     "event": "bow and arrow",
     "scale": -1
   },
@@ -172,6 +172,16 @@
   {
     "year": "1915 AD",
     "event": "Winston Churchill is a firm supporter of a new invention, the tank, encouraging its initial development while still at the Admiralty",
+    "scale": -1
+  },
+  {
+    "year": "1914-1918 AD",
+    "event": "the chemists' war",
+    "scale": -1
+  },
+  {
+    "year": "1915 AD",
+    "event": "chlorine",
     "scale": -1
   },
   {
