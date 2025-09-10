@@ -6051,7 +6051,12 @@
   },
   {
     "years": "2007",
-    "description": "iPhone revolutionises smartphones.",
+    "description": "iPhone",
+    "scale": -1
+  },
+    {
+    "years": "2008",
+    "description": "obama bumper sticker",
     "scale": -1
   },
   {
