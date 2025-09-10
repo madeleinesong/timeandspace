@@ -1,84 +1,4 @@
-[
-  {
-    "years": "13,800,000,000 BC",
-    "description": "Big Bang happens.",
-    "scale": -1
-  },
-  {
-    "years": "13,550,000,000 BC",
-    "description": "Stars ignite, universe glows.",
-    "scale": -1
-  },
-  {
-    "years": "13,000,000,000 BC",
-    "description": "Stars form Milky Way galaxy.",
-    "scale": -1
-  },
-  {
-    "years": "12,200,000,000 BC",
-    "description": "Water appears on Earth.",
-    "scale": -1
-  },
-  {
-    "years": "4,570,000,000 BC",
-    "description": "Sun and solar system form.",
-    "scale": -1
-  },
-  {
-    "years": "4,510,000,000 BC",
-    "description": "Moon forms after big impact.",
-    "scale": -1
-  },
-  {
-    "years": "4,500,000,000 BC",
-    "description": "Earth forms and spins.",
-    "scale": -1
-  },
-  {
-    "years": "4,400,000,000 BC",
-    "description": "Oceans and atmosphere form.",
-    "scale": -1
-  },
-  {
-    "years": "4,400,000,000 BC",
-    "description": "Earth's crust starts subducting.",
-    "scale": -1
-  },
-  {
-    "years": "4,300,000,000 BC",
-    "description": "Basalt rock sparks RNA.",
-    "scale": -1
-  },
-  {
-    "years": "4,000,000,000 BC",
-    "description": "Life begins on Earth.",
-    "scale": -1
-  },
-  {
-    "years": "3,500,000,000 BC",
-    "description": "Photosynthesizing bacteria thrive.",
-    "scale": -1
-  },
-  {
-    "years": "3,400,000,000 BC",
-    "description": "Oxygen  appears in atmosphere.",
-    "scale": -1
-  },
-  {
-    "years": "3,260,000,000 BC",
-    "description": "Meteorite strikes, chaos ensues.",
-    "scale": -1
-  },
-  {
-    "years": "3,200,000,000 BC",
-    "description": "continents emerge from ocean.",
-    "scale": -1
-  },
-  {
-    "years": "2,330,000,000 BC",
-    "description": "Great Oxygenation Event occurs.",
-    "scale": -1
-  },
+[  
   {
     "years": "2,100,000,000 BC",
     "description": "Multicellular life evolves.",
@@ -1601,7 +1521,7 @@
   },
   {
     "years": "1750 BC",
-    "description": "cultivation of the tea plantCamellia sinensis(China,  2\u207f\u1d48 millenniumBCE) \u2192 now the most frequently consumed beverage worldwide, with manyhealth benefits",
+    "description": "cultivation of the tea plant Camellia sinensis(China,  2\u207f\u1d48 millenniumBCE) \u2192 now the most frequently consumed beverage worldwide, with manyhealth benefits",
     "scale": -1
   },
   {
@@ -5172,6 +5092,11 @@
   {
     "years": "1957",
     "description": "living being to depart Earth for outer space",
+    "scale": -1
+  },
+    {
+    "years": "1957",
+    "description": "colorless green ideas sleep furiously",
     "scale": -1
   },
   {

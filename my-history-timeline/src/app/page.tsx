@@ -2,20 +2,15 @@
 
 import React, { useEffect, useRef, useState } from "react";
 
-type TimelineEvent = {
-  years: string;
-  description?: string;
-};
-
 export default function HomePage() {
-  const [timelineData, setTimelineData] = useState<TimelineEvent[]>([]);
+  const [timelineData, setTimelineData] = useState([]);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [jumpYear, setJumpYear] = useState(2024);
   const [pixelsPerYear, setPixelsPerYear] = useState(10);
+  const [inputPixels, setInputPixels] = useState("");
   const maxYear = 2100;
   const minYear = -10000;
   const offset = Math.abs(minYear);
-  const currentYear = new Date().getFullYear();
 
   useEffect(() => {
     fetch("/data.json")
@@ -24,17 +19,15 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    if (!scrollContainerRef.current || timelineData.length === 0) return;
-  
-    // wait for layout to flush
-    requestAnimationFrame(() => {
-      scrollToYear(2024);
-    });
-  }, [timelineData, pixelsPerYear]);
+    setTimeout(() => {
+      if (scrollContainerRef.current) {
+        scrollToYear(2024);
+      }
+    }, 100);
+  }, []);
 
   const handleScroll = () => {
-    if (!scrollContainerRef.current || timelineData.length === 0) return;
-
+    if (!scrollContainerRef.current) return;
     const maxScrollLeft = (maxYear - minYear) * pixelsPerYear;
     if (scrollContainerRef.current.scrollLeft > maxScrollLeft) {
       scrollContainerRef.current.scrollLeft = maxScrollLeft;
@@ -55,145 +48,121 @@ export default function HomePage() {
     scrollToYear(jumpYear);
   };
 
-  const handleZoomIn = () => {
-    setPixelsPerYear((prev) => Math.min(prev * 2, 100));
-  };
-
-  const handleZoomOut = () => {
-    setPixelsPerYear((prev) => Math.max(prev / 2, 1));
+  const handlePixelsPerYearChange = () => {
+    const parsedValue = Number(inputPixels);
+    if (!isNaN(parsedValue) && parsedValue >= 1) {
+      setPixelsPerYear(parsedValue);
+    }
   };
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-gray-100">
-      <div className="fixed top-0 left-0 w-full bg-white shadow-md z-10 px-6 py-3 flex items-center justify-between">
-        <h1 className="text-black font-bold text-lg">Timeline of Everything</h1>
+      {/* Fixed Header in One Row */}
+      <div
+        className="fixed top-0 left-0 w-full bg-white shadow-md z-10 px-6 py-3 flex items-center justify-between"
+        style={{
+          fontSize: "1rem",
+          transform: "scale(1)",
+          transformOrigin: "top left",
+          whiteSpace: "nowrap", // Prevent wrapping
+        }}
+      >
+        <h1 className="text-black font-bold text-lg mr-6">Timeline of Everything</h1>
+        
+        {/* Controls in One Line */}
         <div className="flex items-center space-x-4">
+          {/* Set Scale */}
+          <input
+            type="number"
+            value={inputPixels}
+            onChange={(e) => setInputPixels(e.target.value)}
+            placeholder="Pixels/Year"
+            className="p-2 border border-gray-300 rounded w-24 text-base"
+            style={{ fontSize: "1rem !important" }}
+          />
           <button
-            onClick={handleZoomOut}
-            className="px-3 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+            onClick={handlePixelsPerYearChange}
+            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 text-base"
+            style={{ fontSize: "1rem !important" }}
           >
-            −
+            Set Scale
           </button>
-          <button
-            onClick={handleZoomIn}
-            className="px-3 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
-          >
-            +
-          </button>
+
+          {/* Jump To Year */}
           <input
             type="number"
             value={jumpYear}
-            onChange={(e) => setJumpYear(Number(e.target.value))}
-            placeholder="year"
+            onChange={(e) => setJumpYear(Number(e.target.value) || "")}
+            placeholder="Year (e.g., 2000)"
             className="p-2 border border-gray-300 rounded w-24 text-base"
+            style={{ fontSize: "1rem !important" }}
           />
           <button
             onClick={handleJump}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 text-base"
+            style={{ fontSize: "1rem !important" }}
           >
             Jump To
           </button>
         </div>
       </div>
 
+      {/* Timeline Container */}
       <div
         ref={scrollContainerRef}
-        className="overflow-x-auto bg-white border-t mt-16"
+        className="relative flex h-[88vh] overflow-scroll bg-white border-t mt-16"
         onScroll={handleScroll}
         style={{ scrollBehavior: "smooth" }}
       >
-        <div
-          className="relative"
-          style={{ width: (maxYear - minYear) * pixelsPerYear }}   //  <-- this line
-        >
-            {Array.from({ length: (maxYear - minYear) / 100 + 1 }, (_, i) => {
-            const year = minYear + i * 100;
-            const position = (year + offset) * pixelsPerYear;
-            const width = 100 * pixelsPerYear;
-            const isEven = (year / 100) % 2 === 0;
+        {/* Century Banners (Full Width) */}
+        {Array.from({ length: (maxYear - minYear) / 100 + 1 }, (_, i) => {
+          const year = minYear + i * 100;
+          const position = (year + offset) * pixelsPerYear;
+          const width = 100 * pixelsPerYear;
+          const isEven = (year / 100) % 2 === 0;
 
-            return (
-              <div
-                key={year}
-                className={`absolute text-gray-900 text-sm font-bold py-2 px-4 text-center ${
-                  isEven ? "bg-gray-200" : "bg-gray-300"
-                }`}
-                style={{
-                  left: `${position}px`,
-                  width: `${width}px`,
-                  minWidth: "800px",
-                  transformOrigin: "top center",
-                  position: "absolute",
-                }}
-              >
-                {year > 0 ? `${year} CE` : `${Math.abs(year)} BCE`}
-              </div>
-            );
-          })}
+          return (
+            <div
+              key={year}
+              className={`absolute bottom-0 text-gray-900 text-sm font-bold py-2 px-4 text-center ${
+                isEven ? "bg-gray-200" : "bg-gray-300"
+              }`}
+              style={{
+                left: `${position}px`,
+                width: `${width}px`,
+                minWidth: "100px",
+              }}
+            >
+              {year > 0 ? `${year} CE` : `${Math.abs(year)} BCE`}
+            </div>
+          );
+        })}
 
-          <div
-            className="absolute top-0 bottom-0 w-[3px] bg-red-500"
-            style={{
-              left: `${(currentYear + offset) * pixelsPerYear}px`,
-            }}
-          />
-
-          {timelineData.map((event, index) => {
-            const yearStr = event.years.replace(/,/g, "").replace(" BC", "").replace(" BCE", "");
-            const eventYear = parseInt(yearStr, 10);
-            const adjustedYear = event.years.includes("BC") || event.years.includes("BCE") 
-              ? -eventYear 
+        {/* Timeline Events */}
+        {timelineData.map((event, index) => {
+          const eventYear = parseInt(event.years.replace(/,/g, ""), 10);
+          const adjustedYear =
+            event.years.includes("BC") || event.years.includes("BCE")
+              ? -eventYear
               : eventYear;
 
-            let eventWidth = pixelsPerYear;
-            if (event.years.includes("-")) {
-              const [start, end] = event.years
-                .split("-")
-                .map((y) => parseInt(y.replace(/,/g, "").replace(" BC", "").replace(" BCE", ""), 10));
-              eventWidth = (Math.abs(start - end) || 1) * pixelsPerYear;
-            }
+          const position = (adjustedYear + offset) * pixelsPerYear;
 
-            const position = (adjustedYear + offset) * pixelsPerYear;
-            const textWidth = `${eventWidth}px`;
-
-            return (
-              <div
-                key={index}
-                className="absolute flex-shrink-0 bg-blue-500 text-white p-2 rounded-lg overflow-hidden whitespace-nowrap"
-                style={{
-                  left: `${position}px`,
-                  width: textWidth,
-                  minWidth: "500px",
-                  bottom: "40px",
-                  transform: "none"
-                }}
-              >
-                <div
-                  className="text-xs"
-                  style={{
-                    display: "inline-block",
-                    animation: `scroll-text 20s linear infinite`,
-                  }}
-                >
-                  {event.description?.toLowerCase().replace(/\.$/, "")}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+          return (
+            <div
+              key={index}
+              className="absolute bottom-10 flex-shrink-0 bg-blue-500 text-white p-4 rounded-lg shadow-md"
+              style={{ left: `${position}px` }}
+            >
+              {/* Only show year every century */}
+              {(adjustedYear % 100 === 0 || index === 0) && (
+                <div className="text-center font-bold text-lg mb-2">{event.years}</div>
+              )}
+              <p>{event.description}</p>
+            </div>
+          );
+        })}
       </div>
-       
-
-      <style jsx>{`
-        @keyframes scroll-text {
-          from {
-            transform: translateX(100%);
-          }
-          to {
-            transform: translateX(-100%);
-          }
-        }
-      `}</style>
     </div>
   );
 }
