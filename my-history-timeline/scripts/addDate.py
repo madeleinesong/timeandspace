@@ -14,4 +14,4 @@ def add_scale_field(input_file, output_file):
     print(f"Updated JSON saved as {output_file}")
 
 # usage
-add_scale_field("../public/weaponsdata.json", "../public/weaponsdata.json")
+add_scale_field("../public/weapons.json", "../public/weapons.json")
