@@ -3,12 +3,13 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 type Row = {
-  year: string;            // may be "" for universal items
+  year: string;
   event: string;
   blurb: string;
-  scale?: number;          // 0..10; 8 = individual (universal band)
+  scale?: number;  // 0..10; 8 = universal band
   date?: string;
   image?: string;
+  tags?: string[];
 };
 
 export default function HomePage() {
@@ -22,15 +23,22 @@ export default function HomePage() {
   const [pixelsPerScale, setPixelsPerScale] = useState(140);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<Row | null>(null);
+
+  // marquee + viewport pinning
   const [scrollX, setScrollX] = useState(0);
   const [viewportW, setViewportW] = useState(0);
   const marqueeSeqRef = useRef<HTMLDivElement>(null);
   const [marqueeW, setMarqueeW] = useState(0);
 
+  // global weapons filter
+  const [showWeapons, setShowWeapons] = useState(true);
+
   // --- time domain ---
   const maxYear = 2100;
   const minYear = -10000;
   const offset = Math.abs(minYear);
+
+  const isWeapons = (e: Row) => e.tags?.includes("weapons") ?? false;
 
   // --- scale labels (index = scale id) ---
   const scaleLevels = [
@@ -42,7 +50,7 @@ export default function HomePage() {
     "city",                      // 5
     "institution",               // 6
     "community",                 // 7
-    "individual",                // 8  <-- universal band here
+    "individual",                // 8 (universal band)
     "organ",                     // 9
     "cellular",                  // 10
   ];
@@ -52,8 +60,14 @@ export default function HomePage() {
 
   useEffect(() => {
     fetch("/weaponsAndWar.json")
-      .then((r) => r.json())
-      .then((d: Row[]) => setTimelineData(d));
+    .then(r => r.json())
+    .then((d: Row[]) => {
+      const tagged = d.map(e => ({
+        ...e,
+        tags: [...(e.tags ?? []), "weapons"]
+      }));
+      setTimelineData(tagged);
+    });
   }, []);
 
   useEffect(() => {
@@ -63,13 +77,29 @@ export default function HomePage() {
     return () => clearTimeout(t);
   }, [pixelsPerYear]);
 
+  // viewport measurement for the pinned marquee
+  useEffect(() => {
+    const measureViewport = () => setViewportW(scrollContainerRef.current?.clientWidth ?? 0);
+    measureViewport();
+    window.addEventListener("resize", measureViewport);
+    return () => window.removeEventListener("resize", measureViewport);
+  }, []);
+
+  // marquee measurement
+  useEffect(() => {
+    const measure = () => setMarqueeW(marqueeSeqRef.current?.scrollWidth ?? 0);
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [pixelsPerScale, pixelsPerYear, viewportW, timelineData]);
+
   const handleScroll = () => {
     const el = scrollContainerRef.current;
     if (!el) return;
     const maxScrollLeft = (maxYear - minYear) * pixelsPerYear;
     if (el.scrollLeft > maxScrollLeft) el.scrollLeft = maxScrollLeft;
     if (el.scrollLeft < 0) el.scrollLeft = 0;
-    setScrollX(el.scrollLeft); 
+    setScrollX(el.scrollLeft);
   };
 
   const scrollToYear = (year: number | "") => {
@@ -95,41 +125,61 @@ export default function HomePage() {
     return isBC ? -n : n;
   };
 
+
   // separate the universal band (scale 8) from dated events
   const universal = useMemo(
     () => timelineData.filter((e) => e.scale === INDIVIDUAL_IDX && e.blurb?.trim()),
     [timelineData]
   );
-  const datedEvents = useMemo(
-    () => timelineData.filter((e) => e.scale !== INDIVIDUAL_IDX && parseYear(e.year) !== null),
-    [timelineData]
-  );
 
-  // greedy lane placement to avoid overlap (vertical stacking) — only for dated events
-  const laneHeight = 120;
-  const cardWidth = (py: number) => Math.max(160, Math.min(360, 8 * py));
+  // filter and map dated events; keep them on ONE Y per scale, avoid overlap by pushing rightward
+  const placedCards = useMemo(() => {
+    // source events: not universal, valid year, and pass weapons filter
+    const source = timelineData.filter(
+      (e) =>
+        e.scale !== INDIVIDUAL_IDX &&
+        parseYear(e.year) !== null &&
+        (showWeapons || !isWeapons(e))
+    );
 
-  const cards = datedEvents
-    .map((e) => {
+    // group by scale
+    const byScale = new Map<number, Array<{ e: Row; left: number; width: number; adjustedYear: number }>>();
+    const widthFor = (py: number) => Math.max(160, Math.min(360, 8 * py));
+    for (const e of source) {
       const adjustedYear = parseYear(e.year)!;
       const left = (adjustedYear + offset) * pixelsPerYear;
-      const width = cardWidth(pixelsPerYear);
-      return { e, left, width, adjustedYear };
-    })
-    .sort((a, b) => a.left - b.left);
+      const width = widthFor(pixelsPerYear);
+      const s = typeof e.scale === "number" ? e.scale : 2;
+      if (!byScale.has(s)) byScale.set(s, []);
+      byScale.get(s)!.push({ e, left, width, adjustedYear });
+    }
 
-  const lanes: number[] = []; // last-right-x per lane
-  const cardLane = cards.map((c) => {
-    let lane = 0;
-    while (lane < lanes.length && c.left < lanes[lane]) lane++;
-    if (lane === lanes.length) lanes.push(-Infinity);
-    lanes[lane] = c.left + c.width + 12; // reserve space (12px gap)
-    return lane;
-  });
+    // within each scale lane: sort by left (time), then push right to avoid overlap (single horizontal plane)
+    const GAP_X = 12;
+    const out: Array<{ e: Row; left: number }> = [];
+    for (const [scale, arr] of [...byScale.entries()].sort((a, b) => a[0] - b[0])) {
+      const sorted = arr.sort((a, b) => a.left - b.left);
+      let lastRight = -Infinity;
+      for (const item of sorted) {
+        const placedLeft = Math.max(item.left, lastRight + GAP_X);
+        lastRight = placedLeft + item.width;
+        out.push({ e: { ...item.e, scale }, left: placedLeft });
+      }
+    }
+    return out;
+  }, [timelineData, pixelsPerYear, showWeapons]);
 
+  useEffect(() => {
+    fetch("/weaponsAndWar.json")
+      .then((r) => r.json())
+      .then((d: Row[]) => {
+        const tagged = d.map(e => ({ ...e, tags: [...(e.tags ?? []), "weapons"] }));
+        setTimelineData(tagged);
+      });
+  }, []);
+
+  // panel outside-click + Esc
   const panelRef = useRef<HTMLDivElement>(null);
-
-  // Close on Escape
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -141,7 +191,6 @@ export default function HomePage() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // Close on click outside the panel (but allow clicking event cards)
   useEffect(() => {
     if (!isPanelOpen) return;
     const onDown = (e: MouseEvent) => {
@@ -155,18 +204,12 @@ export default function HomePage() {
     return () => window.removeEventListener("mousedown", onDown);
   }, [isPanelOpen]);
 
-  useEffect(() => {
-    const measure = () =>
-      setMarqueeW(marqueeSeqRef.current?.scrollWidth ?? 0); // width of one sequence
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-    // re-measure when content or viewport changes
-  }, [universal, viewportW, pixelsPerScale, pixelsPerYear]);
-
   // --- 2D canvas dimensions ---
   const canvasWidth = (maxYear - minYear) * pixelsPerYear;
-  const contentHeight = Math.max(60 + lanes.length * laneHeight, minContentHeight);
+  const contentHeight = Math.max(60 + scaleLevels.length * pixelsPerScale, minContentHeight);
+
+  // consistent weapons color
+  const WEAPONS_BLUE = "#1d4ed8"; // blue-600
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-gray-100">
@@ -254,7 +297,7 @@ export default function HomePage() {
               })}
 
               {/* === UNIVERSAL BAND @ scale 8 (animated loop) === */}
-              {universal.length > 0 && (
+              {showWeapons &&universal.length > 0 && (
                 <div
                   className="absolute z-10"
                   style={{
@@ -280,8 +323,8 @@ export default function HomePage() {
                         {universal.map((u, i) => (
                           <span
                             key={`u1-${i}`}
-                            className="px-3 py-1 rounded-full text-sm md:text-base bg-rose-600/80 text-white shadow"
-                          >
+                            className="px-3 py-1 rounded-full text-sm md:text-base bg-blue-700 text-white shadow"
+                            >
                             {u.blurb}
                           </span>
                         ))}
@@ -291,8 +334,8 @@ export default function HomePage() {
                         {universal.map((u, i) => (
                           <span
                             key={`u2-${i}`}
-                            className="px-3 py-1 rounded-full text-sm md:text-base bg-rose-600/80 text-white shadow"
-                          >
+                            className="px-3 py-1 rounded-full text-sm md:text-base bg-blue-700 text-white shadow"
+                            >
                             {u.blurb}
                           </span>
                         ))}
@@ -301,24 +344,39 @@ export default function HomePage() {
                   </div>
                 </div>
               )}
-              {/* events (non-overlapping lanes) */}
-              {cards.map((c, i) => {
-                const isSelected =
+
+              {/* events — ONE horizontal plane per `scale` */}
+              {placedCards.map((c, i) => {
+                const yBase = (typeof c.e.scale === "number" ? c.e.scale : 2) * pixelsPerScale;
+                const top = yBase + 16; // slight offset below the scale line
+
+                const selected =
                   selectedEvent &&
                   selectedEvent.year === c.e.year &&
                   selectedEvent.event === c.e.event;
+
+                const weapons = isWeapons(c.e);
+                if (!showWeapons && weapons) return null; // global filter
+
+                const baseCard =
+                  "group absolute z-20 text-white rounded-lg shadow-md cursor-pointer transition-all duration-200";
+                const nonWeaponsClass = selected
+                  ? "bg-green-600 ring-2 ring-green-400 ring-offset-2"
+                  : "bg-blue-500 hover:bg-blue-600";
+                const weaponsStyle = weapons
+                  ? { backgroundColor: WEAPONS_BLUE }
+                  : undefined;
 
                 return (
                   <div
                     key={i}
                     data-event-card
-                    className={`group absolute z-20 text-white rounded-lg shadow-md cursor-pointer transition-all duration-200 ${
-                      isSelected ? "bg-green-600 ring-2 ring-green-400 ring-offset-2" : "bg-blue-500 hover:bg-blue-600"
-                    }`}
+                    className={`${baseCard} ${weapons ? "" : nonWeaponsClass}`}
                     style={{
                       left: c.left,
-                      top: 80 + cardLane[i] * laneHeight,
-                      width: c.width,
+                      top,
+                      width: Math.max(160, Math.min(360, 8 * pixelsPerYear)),
+                      ...(weaponsStyle || {}),
                     }}
                     title={`${c.e.year} — ${c.e.blurb || c.e.event}`}
                     onClick={() => {
@@ -352,6 +410,23 @@ export default function HomePage() {
             <div className="p-6 h-full overflow-y-auto">
               <h2 className="text-xl font-bold text-gray-800 mb-4">More Info</h2>
 
+              {/* weapons tag toggle */}
+              <div className="mb-3 flex items-center gap-2">
+                <span className="text-xs text-gray-500">Tags:</span>
+                <button
+                  onClick={() => setShowWeapons((v) => !v)}
+                  className="text-xs font-semibold px-2 py-1 rounded-full border"
+                  style={{
+                    borderColor: WEAPONS_BLUE,
+                    color: showWeapons ? "#fff" : WEAPONS_BLUE,
+                    background: showWeapons ? WEAPONS_BLUE : "transparent",
+                  }}
+                  title={showWeapons ? "Hide all weapons items" : "Show weapons items"}
+                >
+                  Weapons
+                </button>
+              </div>
+
               <div className="space-y-4">
                 <div className="p-4 bg-gray-50 rounded-lg">
                   {selectedEvent ? (
@@ -373,9 +448,7 @@ export default function HomePage() {
                         </div>
                       )}
 
-                      <div className="text-gray-700 leading-relaxed">
-                        {selectedEvent.event}
-                      </div>
+                      <div className="text-gray-700 leading-relaxed">{selectedEvent.event}</div>
 
                       <div className="text-xs text-gray-500 grid grid-cols-2 gap-2 pt-2">
                         {selectedEvent.date && (
