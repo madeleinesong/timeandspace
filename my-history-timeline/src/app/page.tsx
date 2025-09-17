@@ -32,7 +32,7 @@ export default function HomePage() {
   const scaleLevels = [
     "planetary",
     "species",
-    "civilizational",
+    "international/civilizational",
     "national",
     "regional",
     "city",
@@ -45,7 +45,7 @@ export default function HomePage() {
   const minContentHeight = (scaleLevels.length + 1) * pixelsPerScale;
 
   useEffect(() => {
-    fetch("/weapons.json")
+    fetch("/weaponsAndWar.json")
       .then((r) => r.json())
       .then((d: Row[]) => setTimelineData(d)); // <-- ensure TS knows about blurb
   }, []);
@@ -108,6 +108,35 @@ export default function HomePage() {
     lanes[lane] = c.left + c.width + 12; // reserve space (12px gap)
     return lane;
   });
+
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  // NEW: close on Escape
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsPanelOpen(false);
+        setSelectedEvent(null);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  // NEW: close on click outside the panel (but allow clicking event cards)
+  useEffect(() => {
+    if (!isPanelOpen) return;
+    const onDown = (e: MouseEvent) => {
+      const el = e.target as HTMLElement;
+      if (panelRef.current?.contains(el)) return;                  // clicks inside panel → ignore
+      if (el.closest("[data-event-card]")) return;                 // clicks on event cards → let card handle (keeps panel)
+      setIsPanelOpen(false);
+      setSelectedEvent(null);
+    };
+    window.addEventListener("mousedown", onDown);
+    return () => window.removeEventListener("mousedown", onDown);
+  }, [isPanelOpen]);
+
 
   // --- 2D canvas dimensions ---
   const canvasWidth = (maxYear - minYear) * pixelsPerYear;
@@ -235,12 +264,6 @@ export default function HomePage() {
                 <div className="px-3 pt-2 pb-1 text-xs font-semibold opacity-90">{c.e.year}</div>
                 <div className="px-3 pb-3 text-sm leading-snug max-h-20 overflow-hidden">
                   {c.e.blurb}
-                </div>
-
-                {/* hover popover for full text */}
-                <div className="hidden group-hover:block absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-[28rem] max-w-[80vw] bg-white text-black rounded-xl shadow-2xl p-4 z-30">
-                  <div className="text-xs font-semibold mb-1">{c.e.year}</div>
-                  <div className="text-sm leading-snug">{c.e.blurb}</div>
                 </div>
               </div>
             );
