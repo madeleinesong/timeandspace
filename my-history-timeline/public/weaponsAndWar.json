@@ -1,5 +1,117 @@
 [
   {
+    "year": "",
+    "event": "",
+    "date": "",
+    "scale": 8,
+    "blurb": "smell of blood"
+  },
+  {
+    "year": "",
+    "event": "",
+    "date": "",
+    "scale": 8,
+    "blurb": "cry of pain"
+  },
+  {
+    "year": "",
+    "event": "",
+    "date": "",
+    "scale": 8,
+    "blurb": "one man kills another"
+  },
+  {
+    "year": "",
+    "event": "",
+    "date": "",
+    "scale": 8,
+    "blurb": "i didn't want to do it"
+  },
+  {
+    "year": "",
+    "event": "",
+    "date": "",
+    "scale": 8,
+    "blurb": "i didn't want to die"
+  },
+  {
+    "year": "",
+    "event": "",
+    "date": "",
+    "scale": 8,
+    "blurb": "it was my right"
+  },
+  {
+    "year": "",
+    "event": "",
+    "date": "",
+    "scale": 8,
+    "blurb": "it was my fault"
+  },
+  {
+    "year": "",
+    "event": "",
+    "date": "",
+    "scale": 8,
+    "blurb": "thou shalt not"
+  },
+  {
+    "year": "",
+    "event": "",
+    "date": "",
+    "scale": 8,
+    "blurb": "crack of bone"
+  },
+  {
+    "year": "",
+    "event": "",
+    "date": "",
+    "scale": 8,
+    "blurb": "i had no choice"
+  },
+  {
+    "year": "",
+    "event": "",
+    "date": "",
+    "scale": 8,
+    "blurb": "don't die, don't die"
+  },
+  {
+    "year": "",
+    "event": "",
+    "date": "",
+    "scale": 8,
+    "blurb": "do it now"
+  },
+  {
+    "year": "",
+    "event": "",
+    "date": "",
+    "scale": 8,
+    "blurb": "it could have been me"
+  },
+  {
+    "year": "",
+    "event": "",
+    "date": "",
+    "scale": 8,
+    "blurb": "it could have been worse"
+  },
+  {
+    "year": "",
+    "event": "",
+    "date": "",
+    "scale": 8,
+    "blurb": "could it have been better"
+  },
+  {
+    "year": "",
+    "event": "",
+    "date": "",
+    "scale": 1,
+    "blurb": "humans develop more efficient ways to kill each other"
+  },
+  {
     "year": "64000 BC",
     "event": "Animals hunted with stone-tip weapons",
     "date": "",
@@ -248,7 +360,7 @@
     "year": "1914-1918 AD",
     "event": "World War 1, 'the chemists' war'",
     "blurb": "WWI",
-    "scale": 1,
+    "scale": 2,
     "date": ""
   },
   {
@@ -297,7 +409,7 @@
     "year": "1945 AD",
     "event": "the United States detonates two atomic bombs over the Japanese cities of Hiroshima and Nagasaki, respectively, during World War II. The aerial bombings kill between 150,000 and 246,000 people, most of whom were civilians, and remain the only uses of nuclear weapons in an armed conflict.",
     "blurb": "atomic bombings of Hiroshima and Nagasaki",
-    "scale": 1,
+    "scale": 2,
     "date": "August 6-9, 1945"
   },
   {
