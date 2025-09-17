@@ -1,313 +1,365 @@
 [
   {
     "year": "64000 BC",
-    "event": "animals hunted with stone-tip weapons",
+    "event": "Animals hunted with stone-tip weapons",
+    "date": "",
     "scale": -1,
-    "date": ""
+    "blurb": "stone-tip weapons"
   },
   {
     "year": "25000 BC",
-    "event": "phalanx",
+    "event": "Thephalanx",
+    "date": "",
     "scale": -1,
-    "date": ""
+    "blurb": "phalanx"
   },
   {
     "year": "15000 BC",
     "event": "bow and arrow",
+    "date": "",
     "scale": -1,
-    "date": ""
+    "blurb": "bow and arrow"
   },
   {
     "year": "2500 BC",
     "event": "The treasures found in the royal cemetery at Ur include a depiction of soldiers in copper helmets, armed with battleaxes",
+    "date": "",
     "scale": -1,
-    "date": ""
+    "blurb": "copper helmets and battleaxes"
   },
   {
     "year": "1800 BC",
     "event": "In Mesopotamia the new weapon is a light chariot, drawn by two horses",
+    "date": "",
     "scale": -1,
-    "date": ""
+    "blurb": "light chariots"
   },
   {
     "year": "1500 BC",
     "event": "The composite bow, accurate to 200 yards, is used by warriors in Asia fighting from chariots and on horseback",
+    "date": "",
     "scale": -1,
-    "date": ""
+    "blurb": "composite bow"
   },
   {
     "year": "1500 BC",
-    "event": "war chariots",
+    "event": "The war chariot",
+    "date": "",
     "scale": -1,
-    "date": ""
+    "blurb": "war chariot"
   },
   {
     "year": "1100 BC",
     "event": "The Phoenicians develop the war galley, with a sharp battering ram in the bow",
+    "date": "",
     "scale": -1,
-    "date": ""
+    "blurb": "war galley"
   },
   {
     "year": "850 BC",
     "event": "The Assyrians develop the battering ram into a mobile and powerful siege engine",
+    "date": "",
     "scale": -1,
-    "date": ""
+    "blurb": "battering ram"
   },
   {
     "year": "800 BC",
     "event": "The Assyrian army makes good use of the new technology by which iron can be hardened into steel suitable for weapons",
+    "date": "",
     "scale": -1,
-    "date": ""
+    "blurb": "iron weapons"
   },
   {
     "year": "340 BC",
     "event": "The Macedonians develop the catapult as a siege engine for the armies of Philip II and Alexander the Great",
+    "date": "",
     "scale": -1,
-    "date": ""
+    "blurb": "catapult"
   },
   {
     "year": "299 BC",
-    "event": "The Roman siege technique is improved by the 'tortoise' which protects the attacking force",
+    "event": "The Roman siege technique is improved by the 'tortoise' which protects the attacking force. In the testudo formation, the men would align their shields to form a packed formation covered with shields on the front and top. The first row of men, possibly excluding the men on the flanks, would hold their shields from about the height of their shins to their eyes, so as to cover the formation's front. The shields would be held in such a way that they presented a shield wall to all sides. The men in the back ranks would place their shields over their heads to protect the formation from above, balancing the shields on their helmets, overlapping them.",
+    "date": "",
     "scale": -1,
-    "date": ""
+    "blurb": "roman siege technique"
   },
   {
     "year": "250 BC",
     "event": "The Chinese develop the crossbow, many centuries before its use in Europe",
+    "date": "",
     "scale": -1,
-    "date": ""
+    "blurb": "crossbow"
   },
   {
     "year": "674 AD",
-    "event": "A Muslim fleet attacking Constantinople is deterred by the first known use of the Byzantine secret recipe for 'Greek fire'",
+    "event": "A Muslim fleet attacking Constantinople is deterred by the first known use of the Byzantine secret recipe for 'Greek fire'. The recipe for Greek fire was a closely-guarded state secret; historians have variously speculated that it was based on saltpeter, sulfur, or quicklime, but most modern scholars agree that it was based on petroleum mixed with resins, comparable in composition to modern napalm.",
+    "date": "",
     "scale": -1,
-    "date": ""
+    "blurb": "Greek fire"
   },
   {
     "year": "1040 AD",
     "event": "A Chinese manual on warfare includes the earliest known description of gunpowder",
+    "date": "",
     "scale": -1,
-    "date": ""
+    "blurb": "gunpowder"
   },
   {
     "year": "1139 AD",
     "event": "Pope Innocent III and the second Lateran council outlaw the crossbow as a weapon causing unacceptable devastation",
+    "date": "",
     "scale": -1,
-    "date": ""
+    "blurb": "crossbow outlowed by Pope Innocent III"
   },
   {
     "year": "1200 AD",
     "event": "The longbow, a weapon of great use to English armies, is probably first developed in Wales",
-    "scale": -1,
-    "date": ""
+    "date": "",
+    "blurb": "longbow",
+    "scale": -1
   },
   {
     "year": "1298 AD",
     "event": "The English longbow, in one of its early appearances, proves too much for the Scots at Falkirk",
+    "blurb": "English longbow defeats the Scots at Falkirk",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1327 AD",
     "event": "The earliest surviving illustration of a cannon is drawn in this year (in a manuscript now in Oxford)",
+    "blurb": "earliest surviving illustration of a cannon",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1365 AD",
     "event": "Portable guns are introduced not long after artillery, being mentioned in several European texts of the second half of the fourteenth century",
+    "blurb": "portable guns",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1450 AD",
     "event": "The matchlock, ignited from a smouldering length of rope, becomes the standard form of musket",
+    "blurb": "matchlock musket",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1453 AD",
     "event": "The Turks terrify Constantinople by lobbing vast stones at the city from a 19-ton bombard of cast iron",
+    "blurb": "19-ton bombard of cast iron at Constantinople",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1610 AD",
     "event": "A flintlock designed in France (possibly by Marin Le Bourgeoys) becomes the standard firing mechanism for muskets",
+    "blurb": "flintlock musket",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1688 AD",
-    "event": "S\u00e9bastien de Vauban's socket bayonet is introduced in the French army",
+    "event": "Sébastien de Vauban's socket bayonet is introduced in the French army",
+    "blurb": "socket bayonet",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1807 AD",
-    "event": "A Scottish clergyman, Alexander Forsyth, invents the percussion cap to help in his pursuit of wildfowl",
+    "event": "A Scottish clergyman, Alexander Forsyth, invents the percussion cap to help in his pursuit of wildfowl, enabling firearms to fire reliably in any weather condition.",
+    "blurb": "percussion cap",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1846 AD",
     "event": "The self-contained metal cartridge, with a percussion cap in its base, is patented by a Paris gunsmith named Houiller",
+    "blurb": "bullet",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1848 AD",
     "event": "The Prussian army is the first to adopt a breech-loading rifle, the 'needle-gun' developed by gunsmith Johann Nikolaus von Dreyse",
+    "blurb": "breech-loading rifle",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1884 AD",
     "event": "US-born British inventor Hiram Maxim demonstrates the first prototype of his machine gun, using the recoil force to eject the spent cartridge and insert a new one",
+    "blurb": "machine gun",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1892 AD",
     "event": "Frederick Lugard's Maxim machine gun settles a Protestant-Catholic clash in Kampala, the capital of Buganda",
+    "blurb": "machine gun used in Kampala",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1905 AD",
     "event": "The first German submarine, or U-boat, is constructed in a programme to catch up with Britain and France in this area",
+    "blurb": "German U-boat",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1906 AD",
-    "event": "Britain launches HMS Dreadnought , the first of a massive new class of battleship",
+    "event": "Britain launches HMS Dreadnought, the first of a massive new class of battleship, he first battleship of her era to have a uniform main battery, rather than having a few large guns complemented by a heavy secondary armament of smaller guns. She was also the first capital ship to be powered by steam turbines, making her the fastest battleship in the world at the time of her completion.",
+    "blurb": "HMS Dreadnought",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1907 AD",
     "event": "President Roosevelt sends a fleet of warships on a goodwill tour of the world that also demonstrates US power",
+    "blurb": "US warships",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1911 AD",
     "event": "US inventor Isaac Newton Lewis patents a lighter version of the machine gun",
+    "blurb": "a lighter version of the machine gun",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1913 AD",
     "event": "The Vickers Fighting Biplane No 1 is unveiled in London at the Olympia Aero Show as the world's first purpose-built fighter plane",
+    "blurb": "Vickers Fighting Biplane No 1",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1915 AD",
     "event": "Winston Churchill is a firm supporter of a new invention, the tank, encouraging its initial development while still at the Admiralty",
+    "blurb": "the tank",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1914-1918 AD",
-    "event": "the chemists' war",
+    "event": "World War 1, 'the chemists' war'",
+    "blurb": "WWI",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1915 AD",
-    "event": "chlorine",
+    "event": "Chlorine gas,  which irritated the lung tissue, causing a choking effect that could cause death, first used as a weapon of war, by Germany, on the northern end of the Ypres salient. But when the wind changed direction it was blown back at their own lines, they suffered more casualties than the Allies, especially when the Allies released some gas of their own. There was no technology to protect the soldiers from this new weapon; an operational gas mask was not available, so the Allied soldiers improvised with linen masks soaked in water and “respirators” made from lint and tape. ",
+    "blurb": "chlorine gas",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1936 AD",
     "event": "The prototype of the Spitfire, designed by Reginald Mitchell, has its first test flight",
+    "blurb": "Spitfire",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1939 AD",
     "event": "August 2 - German-born US physicist Albert Einstein writes to President Roosevelt, warning of the potential of an atomic bomb",
+    "blurb": "Einstein urges against the development of theatomic bomb",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1942 AD",
     "event": "April - British engineer Barnes Wallis designs a bouncing and rotating bomb for use against German dams",
+    "blurb": "bouncing and rotating bomb",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1944 AD",
     "event": "June 13 - the first V-1 flying bombs (or doodlebugs) appear over London, numbering more than 2000 in two weeks",
+    "blurb": "V-1 flying bombs",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1945 AD",
     "event": "March 9 - napalm, used to bomb a crowded part of Tokyo, creates a firestorm in which 80,000 die",
+    "blurb": "napalm",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1946 AD",
     "event": "The first of about 20 US tests of atomic and hydrogen bombs is carried out on Bikini Atoll, in the Pacific",
+    "blurb": "first US atomic bomb test",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1949 AD",
     "event": "The first Soviet atomic bomb, called by the Americans Joe One, is successfully tested in Kazakhstan",
+    "blurb": "first Soviet atomic bomb",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1950 AD",
     "event": "In response to the Soviet atom bomb, President Truman announces a crash programme to develop a hydrogen bomb",
+    "blurb": "development of a hydrogen bomb",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1951 AD",
     "event": "The first hydrogen bomb is successfully tested by the US at Enewetak Atoll in the Marshall Islands",
+    "blurb": "first US hydrogen bomb tested",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1953 AD",
     "event": "The first Soviet hydrogen bomb is successfully tested at the Semipalatinsk Test Site in Kazakhstan",
+    "blurb": "first Soviet hydrogen bomb tested",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1962 AD",
     "event": "US intelligence reveals nuclear missile bases under construction in Cuba, causing an international crisis",
+    "blurb": "Cuban Missile Crisis",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1972 AD",
     "event": "The SALT 1 treaty is signed by the US and USSR, limiting anti-ballistic missiles",
+    "blurb": "SALT 1 treaty",
     "scale": -1,
     "date": ""
   },
   {
     "year": "1983 AD",
     "event": "President Reagan proposes a Strategic Defence Initiative (SDI) against nuclear attack",
+    "blurb": "Strategic Defence Initiative (SDI)",
     "scale": -1,
     "date": ""
   },
   {
     "year": "2006 AD",
     "event": "North Korea test-fires seven missiles, of varying ranges and with varying success",
+    "blurb": "North Korean ICBMs",
     "scale": -1,
     "date": ""
   },
   {
     "year": "2007 AD",
     "event": "China carries out a successful test of a ground-based missile that can destroy satellites in orbit",
+    "blurb": "China's anti-satellite missile test",
     "scale": -1,
     "date": ""
   }
